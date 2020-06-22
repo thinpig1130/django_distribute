@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Board List {% endblock %}
+
+{% block main %}
+<main class="page-section" style="margin-top:40px">
+    <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Board List</h2>
+        <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+        </div>
+
+    <div class="col-lg-10 mx-auto">
+        <div align="right">
+               <a class="btn btn-outline-primary" style="margin-bottom:10px" href="{% url 'board:add' %}">글쓰기</a>
+        </div>
+
+      <table class="table table-primary table-hover table-borderless ">
+          <thead>
+            <tr class="bg-primary" align="center">
+              <th scope="col">#</th>
+              <th scope="col">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</th>
+              <th scope="col">작성자</th>
+              <th scope="col">등록일</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for post in posts %}
+                <tr>
+                  <td align="center"><strong>{{ post.id }}</strong></td>
+                  <td><a href='{{ post.get_absolute_url }}'>{{ post.title }}</a></td>
+                  <td> {{ post.owner }} </td>
+                  <td align="center">{{ post.modify_dt|date:"Y-n-d" }}</td>
+                </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <div class="divider-custom">
+            <nav aria-label="Page navigation example">
+                  <ul class="pagination">
+                    {% for n in page_obj.paginator.page_range %}
+                      {% if n == page_obj.number %}
+                      <li class="page-item active" >
+                      {% else %}
+                      <li class="page-item">
+                      {% endif%}
+                    <a class="page-link" href="?page={{n}}">{{n}}</a></li>
+                    {% endfor %}
+                  </ul>
+            </nav>
+        </div>
+    </div>
+
+
+
+
+</main>
+{% endblock %}
